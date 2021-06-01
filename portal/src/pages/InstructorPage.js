@@ -8,17 +8,32 @@ class InstructorPage extends Component {
         super(props);
         this.state = {
            
-
+            student_list: null
         }
     }
 
     componentDidMount() {
         if (!this.checkAuthentication().loggedIn || this.checkAuthentication().usertype !== 'Instructor') {
             this.props.history.push("/");
-        } 
+        } else {
+            this.fetchStudentUsers();
+        }
 
 
     }
+
+    fetchStudentUsers() {
+
+        // Get users
+        console.log('Getting the users list');
+        fetch('http://localhost:8000/api/users')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({ student_list: data.filter((e) => e.usertype !== 'Instructor') });
+            }).catch(err => console.log('Error: ' + err));
+
+    }
+
 
     checkAuthentication() {
         console.log(JSON.parse(localStorage.getItem('local_auth')));

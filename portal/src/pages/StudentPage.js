@@ -12,7 +12,7 @@ class StudentPage extends Component {
 
     componentDidMount() {
         this.checkAuthentication();
-
+        this.fetchAssignments(JSON.parse(localStorage.getItem('local_auth')).userId);
 
     }
 
@@ -23,6 +23,20 @@ class StudentPage extends Component {
             this.props.history.push("/");
         }
 
+    }
+
+    fetchAssignments(userid) {
+        console.log('Getting the users assignments');
+        fetch(`http://localhost:8000/api/assign?user=${userid}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                data.error ?
+                    this.setState({ error: data.error })
+                    :
+                    this.setState({ assignment: data.message })
+
+            }).catch(err => console.log('Error: ' + err));
     }
 
     render() {

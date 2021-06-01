@@ -20,8 +20,19 @@ class LandingPage extends Component {
 
 
     componentDidMount() {
+        this.checkAuthentication();
+    }
+
+    checkAuthentication() {
+        let local = JSON.parse(localStorage.getItem('local_auth'));
+        if (local.loggedIn) {
+            local.usertype === 'Student' ?
+                this.props.history.push(`/${local.usertype}?id=${local.userId}`)
+                :
+                this.props.history.push(`/${local.usertype}`)
 
 
+        }
     }
 
     logIn(e) {
