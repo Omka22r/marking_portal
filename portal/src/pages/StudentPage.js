@@ -11,12 +11,19 @@ class StudentPage extends Component {
     }
 
     componentDidMount() {
-       
+        this.checkAuthentication();
+
 
     }
 
+    checkAuthentication() {
+        let local = JSON.parse(localStorage.getItem('local_auth'));
 
-    
+        if (!local.loggedIn || local.usertype !== 'Student') {
+            this.props.history.push("/");
+        }
+
+    }
 
     render() {
 
@@ -26,7 +33,7 @@ class StudentPage extends Component {
                 fluid
                 style={{ minHeight: '100vh', minWidth: '100vw', overflowY: 'auto' }}
                 className="col-12 d-flex flex-column justify-content-start h-100">
-                <h3 className="text-info border-bottom p-2 border-dark" style={{ letterSpacing: 2 }}> Assignment </h3>
+                <h3 className="text-info border-bottom p-2 border-dark" style={{ letterSpacing: 2 }}> Assignments </h3>
                 
 
 

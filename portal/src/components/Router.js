@@ -16,17 +16,59 @@ class Routing extends Component {
     }
 
     componentDidMount() {
-        this.callBackend();
+
+        this.localStorageSetup();
+        this.fetchUser();
+        this.fetchAssignments();
     }
 
-    callBackend() {
-        fetch('http://localhost:8000/api')
+    localStorageSetup() {
+
+        console.log(localStorage.getItem('local_auth'));
+
+        if (localStorage.getItem('local_auth') === null) {
+
+            let auth = {
+                "loggedIn": false,
+                "userId": null,
+                "name": null,
+                "usertype": null
+
+            };
+
+            localStorage.setItem('local_auth', JSON.stringify(auth));
+
+        }
+    }
+
+
+    fetchUser() {
+
+        // Get users
+        console.log('Getting the users list');
+        fetch('http://localhost:8000/api/users')
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                console.log(data)
             }).catch(err => console.log('Error: ' + err));
     }
 
+    clearUsers() {
+        //Delete all the users from database
+        fetch('http://localhost:8000/api/users', { method: 'DELETE' })
+            .then(response => response.json())
+            // .then(e => console.log('Error: ' + e))
+            .catch(err => console.log('Error: ' + err));
+    }
+
+    fetchAssignments() {
+        console.log('Getting all the Assignments');
+        fetch('http://localhost:8000/api/assign')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+            }).catch(err => console.log('Error: ' + err));
+    }
 
     render() {
         return (

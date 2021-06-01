@@ -12,6 +12,20 @@ class InstructorPage extends Component {
         }
     }
 
+    componentDidMount() {
+        if (!this.checkAuthentication().loggedIn || this.checkAuthentication().usertype !== 'Instructor') {
+            this.props.history.push("/");
+        } 
+
+
+    }
+
+    checkAuthentication() {
+        console.log(JSON.parse(localStorage.getItem('local_auth')));
+        let local = JSON.parse(localStorage.getItem('local_auth'));
+        return local;
+
+    }
 
     render() {
 

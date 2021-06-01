@@ -17,14 +17,14 @@ class LandingPage extends Component {
     }
 
 
- 
+
 
     componentDidMount() {
-       
+
 
     }
 
-    signIn(e) {
+    logIn(e) {
 
         e.preventDefault();
         this.setState({ loading: true });
@@ -64,7 +64,7 @@ class LandingPage extends Component {
 
     }
 
-    
+
     render() {
 
 
@@ -75,7 +75,7 @@ class LandingPage extends Component {
                 {this.state.error !== null ?
                     <h6 className="text-danger mt-3">{this.state.error}</h6> : null
                 }
-                <Form onSubmit={(e) => this.signIn(e)} className="mt-2 text-dark">
+                <Form onSubmit={(e) => this.logIn(e)} className="mt-2 text-dark">
                     <Form.Group>
                         <Form.Label><h5>Username</h5></Form.Label>
                         <Form.Control value={this.state.username} onChange={(e) => this.setState({ username: e.target.value })} type="text" placeholder="Username" />
@@ -87,15 +87,15 @@ class LandingPage extends Component {
 
                     {
                         !this.state.loading ?
-                            <Button size="sm" type="submit" disabled={this.state.username.length === 0 || this.state.password.length === 0}
-                            variant="primary">
+                            <Button className="d-flex align-items-center" size="sm" type="submit" disabled={this.state.username.length === 0 || this.state.password.length === 0}
+                                variant="primary">
                                 LOG IN <BoxArrowRight className="ml-2" size="18" />
-                        </Button> :
+                            </Button> :
                             <Spinner className="mx-auto" animation="grow" />
                     }
 
                 </Form>
-        
+
             </Container>
         )
     }

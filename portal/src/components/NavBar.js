@@ -10,7 +10,7 @@ class NavBar extends Component {
 
         this.state = {
 
-
+            current_user: null
 
         }
     }
@@ -18,6 +18,21 @@ class NavBar extends Component {
 
 
     componentDidMount() {
+
+        this.setState({ current_user: JSON.parse(localStorage.getItem('local_auth')) });
+    }
+
+    logout() {
+
+        let local = JSON.parse(localStorage.getItem('local_auth'));
+
+        local.loggedIn = false;
+
+        localStorage.setItem('local_auth', JSON.stringify(local));
+
+        this.props.history.push("/");
+
+
 
 
     }
@@ -27,36 +42,35 @@ class NavBar extends Component {
 
 
         return (
+            this.state.current_user === null ?
 
-            <Navbar bg="dark" variant="dark">
+                null
+                :
+                <Navbar bg="dark" variant="dark">
 
-                <Nav className="d-flex flex-column">
-                    <Navbar.Brand className="text-info" href="#home">
-                        <Easel className="m-2" size="42" />
+                    <Nav className="d-flex flex-column">
+                        <Navbar.Brand className="text-info" href="#home">
+                            <Easel className="m-2" size="42" />
                     Marking Portal
                     </Navbar.Brand>
-
-
-
-
-                </Nav>
-                <Navbar.Toggle />
-                <Navbar.Collapse className="justify-content-around d-flex align-items-center">
-
-                    <Nav className="ml-auto d-flex align-items-center">
-                        <Navbar.Text className="mr-3 text-white">
-                            <h5>Omkar Sidhu</h5>
-                            <p>Instructor</p>
-                            <Link className="text-dark" to={'/'}>
-                                <Button size="sm" >Logout <BoxArrowLeft className="ml-2" size="18" /></Button>
-                            </Link>
-                        </Navbar.Text>
-
                     </Nav>
+                    <Navbar.Toggle />
+                    <Navbar.Collapse className="justify-content-around d-flex align-items-center">
+
+                        <Nav className="ml-auto d-flex align-items-center">
+                            <Navbar.Text className="mr-3 text-white">
+                                <h5>{this.state.current_user.name}</h5>
+                                <p> {this.state.current_user.usertype}</p>
+                                <Link className="text-dark" to={'/'}>
+                                    <Button className="d-flex align-items-center" onClick={() => this.logout()} size="sm" >Logout <BoxArrowLeft className="ml-2" size="18" /></Button>
+                                </Link>
+                            </Navbar.Text>
+
+                        </Nav>
 
 
-                </Navbar.Collapse>
-            </Navbar>
+                    </Navbar.Collapse>
+                </Navbar>
 
         )
     }
