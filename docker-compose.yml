@@ -1,0 +1,34 @@
+version: "2"
+services:
+    portal:
+        build:
+            context: ./portal/
+        restart: always
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./portal:/portal
+            - /portal/node_modules
+        links:
+            - backend
+        
+    backend:
+        build:
+            context: ./backend/
+        restart: always
+        ports:
+            - "9000:9000"
+        volumes:
+            - ./backend:/backend
+            - /backend/node_modules
+        depends_on:
+            - database
+    database:
+        image: mongo
+        restart: always
+        container_name: mongo_db
+        volumes:
+            - ./data-node:/data/db
+        ports:
+            - 27017:27017
+        
