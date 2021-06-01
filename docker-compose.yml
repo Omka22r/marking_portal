@@ -17,7 +17,7 @@ services:
             context: ./backend/
         restart: always
         ports:
-            - "9000:9000"
+            - "8000:8000"
         volumes:
             - ./backend:/backend
             - /backend/node_modules
@@ -26,7 +26,7 @@ services:
     database:
         image: mongo
         restart: always
-        container_name: mongo_db
+        container_name: database
         volumes:
             - ./data-node:/data/db
         ports:
