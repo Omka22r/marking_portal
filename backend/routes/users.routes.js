@@ -10,9 +10,11 @@ module.exports = app => {
     // Retrieve all users
     router.get("/users", users.userList);
 
- 
     // Delete all users
     router.delete("/users", users.clearUsers);
+
+    // Authenticate Users
+    router.get("/users/auth", users.authenticate);
 
     app.use('/api', router);
 };

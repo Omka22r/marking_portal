@@ -120,3 +120,25 @@ exports.clearUsers = (req, res) => {
     });
 }
 
+// Authenticate Users
+exports.authenticate = (req, res) => {
+
+    console.log(req.query);
+    Users.find({ username: req.query.user })
+        .then(data => {
+
+            if (data.length === 0) {
+                res.send({ 'error': 'User does not exist.' });
+            } else {
+
+                data[0].password == req.query.pass ?
+                    res.send({ 'message': 'User Authenticated', 'user': data[0] }) :
+                    res.send({ 'error': 'Incorrect Password' });
+            }
+        }).catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving Users."
+            });
+        });
+};
