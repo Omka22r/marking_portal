@@ -61,9 +61,9 @@ class NavBar extends Component {
                             <Navbar.Text className="mr-3 text-white">
                                 <h5>{this.state.current_user.name}</h5>
                                 <p> {this.state.current_user.usertype}</p>
-                                <Link className="text-dark" to={'/'}>
-                                    <Button className="d-flex align-items-center" onClick={() => this.logout()} size="sm" >Logout <BoxArrowLeft className="ml-2" size="18" /></Button>
-                                </Link>
+
+                                <Button className="d-flex align-items-center" onClick={() => this.logout()} size="sm" >Logout <BoxArrowLeft className="ml-2" size="18" /></Button>
+
                             </Navbar.Text>
 
                         </Nav>

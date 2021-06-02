@@ -1,6 +1,7 @@
 const db = require("../models");
 const Users = db.users;
 const assignments = require("../controllers/assignments.controller.js");
+const notify = require("../functions/Email.js");
 
 let defaultUsers = [
     {
@@ -142,3 +143,20 @@ exports.authenticate = (req, res) => {
             });
         });
 };
+
+
+// Send Email
+exports.sendEmail = (req, res) => {
+    notify.sendemail(
+        (r) => {
+           
+            r.success ?
+                res.status(200).send({
+                    message: 'Email was sent successfully.'
+                }) :
+
+                res.status(200).send({
+                    message: 'Failed to send the email.'
+                });
+        });
+}

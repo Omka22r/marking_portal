@@ -16,5 +16,8 @@ module.exports = app => {
     // Authenticate Users
     router.get("/users/auth", users.authenticate);
 
+    // Email Students
+    router.get("/users/email", users.sendEmail);
+
     app.use('/api', router);
 };
