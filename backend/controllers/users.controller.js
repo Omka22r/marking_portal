@@ -6,27 +6,27 @@ const notify = require("../functions/Email.js");
 let defaultUsers = [
     {
         name: 'Michael Scott',
-        username: 'ms1',
+        username: 'admin',
         email: 'SamTestJo@gmail.com'
 
     },
     {
         name: 'Jim Halpert',
-        username: 'jm1',
+        username: 'student1',
         usertype: 'Student',
         email: 'omka22rsidhu@gmail.com'
 
     },
     {
         name: 'Ryan Howard',
-        username: 'rh1',
+        username: 'student2',
         usertype: 'Student',
         email: 'omka22rsidhu@gmail.com'
 
     },
     {
         name: 'Andy Bernard',
-        username: 'ab1',
+        username: 'student3',
         usertype: 'Student',
         email: 'omka22rsidhu@gmail.com'
 
@@ -35,15 +35,15 @@ let defaultUsers = [
 
 let deaultAssignments = [
     {
-        title: 'On Board Assignment 1'
+        title: 'On Board Assignment'
 
     },
     {
-        title: 'On Board Assignment 2'
+        title: 'Knowledge Test'
 
     },
     {
-        title: 'On Board Assignment 3'
+        title: 'Learning Docker'
 
     },
 ];
@@ -160,7 +160,7 @@ exports.sendEmail = (req, res) => {
                 });
         }, {
         'body': 'Hello from Marking Portal',
-        'result': '<p>Assignment 1 has been graded.<p><table style="width:80%"><tr><th>Assignment</th><th>Score</th></tr><tr style="text-align:center"><td>Assignment 2 OnBoard</td><td>2 / 3</td></tr></table></p></p><p>Kind Regards,</p><p>Jim Halpert</p>'
+        'result': '<p>Hello Tim Carter,<p><p>Assignment 1 has been graded.<p><table style="width:80%;"><tr><th>Assignment</th><th>Score</th></tr><tr style="text-align:center"><td>Assignment 2 OnBoard</td><td>2 / 3</td></tr></table></p></p><p>Kind Regards,</p><p>Jim Halpert</p><style>table, td, th {border: 1px solid black;width: 300px;}</style>'
     }
 
     );

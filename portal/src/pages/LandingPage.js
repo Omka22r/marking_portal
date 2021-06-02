@@ -81,7 +81,7 @@ class LandingPage extends Component {
         console.log(process.backend);
         return (
             <Container style={{ minHeight: '30vh' }} className="bg-light mt-5 p-5 d-flex text-dark flex-column justify-content-center col-lg-4 col-md-8">
-                <h2 className="text-info" style={{ letterSpacing: 2 }}>Marking Portal {process.env.NODE_ENV} <Easel className="ml-2" size="45" /></h2>
+                <h2 className="text-info" style={{ letterSpacing: 2 }}>Marking Portal <Easel className="ml-2" size="45" /></h2>
 
                 {this.state.error !== null ?
                     <h6 className="text-danger mt-3">{this.state.error}</h6> : null
@@ -91,14 +91,14 @@ class LandingPage extends Component {
                         <Form.Label><h5>Username</h5></Form.Label>
                         <Form.Control value={this.state.username} onChange={(e) => this.setState({ username: e.target.value })} type="text" placeholder="Username" />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className="mt-3">
                         <Form.Label><h5>Password</h5></Form.Label>
                         <Form.Control value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })} type="password" placeholder="Password" />
                     </Form.Group>
 
                     {
                         !this.state.loading ?
-                            <Button className="d-flex align-items-center" size="sm" type="submit" disabled={this.state.username.length === 0 || this.state.password.length === 0}
+                            <Button className="d-flex align-items-center mt-3" size="sm" type="submit" disabled={this.state.username.length === 0 || this.state.password.length === 0}
                                 variant="primary">
                                 LOG IN <BoxArrowRight className="ml-2" size="18" />
                             </Button> :

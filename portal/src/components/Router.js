@@ -18,8 +18,11 @@ class Routing extends Component {
     componentDidMount() {
 
         this.localStorageSetup();
+        //this.clearAssignments();
+        //this.clearUsers();
         this.fetchUser();
         this.fetchAssignments();
+
     }
 
     localStorageSetup() {
@@ -57,7 +60,14 @@ class Routing extends Component {
         //Delete all the users from database
         fetch(`http://${process.env.REACT_APP_BACK_END}/api/users`, { method: 'DELETE' })
             .then(response => response.json())
-            // .then(e => console.log('Error: ' + e))
+            .then(i => console.log("Clearing Users:" + i))
+            .catch(err => console.log('Error: ' + err));
+    }
+
+    clearAssignments() {
+        fetch(`http://${process.env.REACT_APP_BACK_END}/api/assign`, { method: 'DELETE' })
+            .then(response => response.json())
+            .then(i => console.log("Clearing Assignments:" + i))
             .catch(err => console.log('Error: ' + err));
     }
 

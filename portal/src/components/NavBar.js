@@ -55,14 +55,17 @@ class NavBar extends Component {
                     </Navbar.Brand>
                     </Nav>
                     <Navbar.Toggle />
-                    <Navbar.Collapse className="justify-content-around d-flex align-items-center">
+                    <Navbar.Collapse className="justify-content-end d-flex align-items-center">
 
-                        <Nav className="ml-auto d-flex align-items-center">
+                        <Nav className="d-flex p-2 align-items-center">
                             <Navbar.Text className="mr-3 text-white">
                                 <h5>{this.state.current_user.name}</h5>
                                 <p> {this.state.current_user.usertype}</p>
 
-                                <Button className="d-flex align-items-center" onClick={() => this.logout()} size="sm" >Logout <BoxArrowLeft className="ml-2" size="18" /></Button>
+                                <Button
+                                    className="d-flex align-items-center"
+                                    onClick={() => this.logout()} size="sm" >Logout
+                                <BoxArrowLeft className="m-1" size="18" /></Button>
 
                             </Navbar.Text>
 

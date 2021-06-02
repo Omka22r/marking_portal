@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Row, CardColumns, Button, Card, Container } from 'react-bootstrap';
+import AssignmentTab from '../components/AssignmentTab';
 
 class StudentPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-           
+            assignment: [],
+            error: null,
         }
     }
 
@@ -48,7 +50,15 @@ class StudentPage extends Component {
                 style={{ minHeight: '100vh', minWidth: '100vw', overflowY: 'auto' }}
                 className="col-12 d-flex flex-column justify-content-start h-100">
                 <h3 className="text-info border-bottom p-2 border-dark" style={{ letterSpacing: 2 }}> Assignments </h3>
-                
+
+                {this.state.assignment.length !== 0
+                    ?
+                    <AssignmentTab
+        
+                        assignment={this.state.assignment} /> :
+
+                    <h4>No assignments Found</h4>
+                }
 
 
             </Container>
