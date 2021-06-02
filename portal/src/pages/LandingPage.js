@@ -40,7 +40,7 @@ class LandingPage extends Component {
         e.preventDefault();
         this.setState({ loading: true });
 
-        fetch(`http://localhost:8000/api/users/auth?user=${this.state.username}&pass=${this.state.password}`)
+        fetch(`http://${process.env.REACT_APP_BACK_END}/api/users/auth?user=${this.state.username}&pass=${this.state.password}`)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
@@ -78,10 +78,10 @@ class LandingPage extends Component {
 
     render() {
 
-
+        console.log(process.backend);
         return (
             <Container style={{ minHeight: '30vh' }} className="bg-light mt-5 p-5 d-flex text-dark flex-column justify-content-center col-lg-4 col-md-8">
-                <h2 className="text-info" style={{ letterSpacing: 2 }}>Marking Portal <Easel className="ml-2" size="45" /></h2>
+                <h2 className="text-info" style={{ letterSpacing: 2 }}>Marking Portal {process.env.NODE_ENV} <Easel className="ml-2" size="45" /></h2>
 
                 {this.state.error !== null ?
                     <h6 className="text-danger mt-3">{this.state.error}</h6> : null
