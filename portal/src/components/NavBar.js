@@ -49,7 +49,7 @@ class NavBar extends Component {
                 <Navbar bg="dark" variant="dark">
 
                     <Nav className="d-flex flex-column">
-                        <Navbar.Brand className="text-info" href="#home">
+                        <Navbar.Brand className="text-info" href="#/">
                             <Easel className="m-2" size="42" />
                     Marking Portal
                     </Navbar.Brand>

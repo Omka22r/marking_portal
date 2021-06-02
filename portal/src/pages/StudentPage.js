@@ -53,17 +53,17 @@ class StudentPage extends Component {
 
                 <h3 className="text-info border-bottom p-2 border-dark" style={{ letterSpacing: 2 }}><JournalCheck size="32" /> Assignments </h3>
 
-                
-                    {this.state.assignment.length !== 0
-                        ?
-                        <AssignmentTab
 
-                            assignment={this.state.assignment} /> :
+                {this.state.assignment.length !== 0
+                    ?
+                    <AssignmentTab
+                    onUpdate={() => this.fetchAssignments(JSON.parse(localStorage.getItem('local_auth')).userId)}
+                        assignment={this.state.assignment} /> :
 
-                        <h4>No assignments Found</h4>
-                    }
+                    <h4>No assignments Found</h4>
+                }
 
-                
+
             </Container>
         )
     }

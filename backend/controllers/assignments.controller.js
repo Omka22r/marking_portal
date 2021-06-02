@@ -61,6 +61,31 @@ exports.getAssignmentList = (req, res) => {
 };
 
 
+// Update Assignment
+
+exports.updateAssignment = (req, res) => {
+
+    console.log('Assignment Update');
+    console.log(req.body);
+
+    Assignment.updateOne({ _id: req.body.id },
+            req.body.request, function (err, docs) {
+                if (err) {
+                    console.log(err);
+                    res.send({
+                        error: err
+                    });
+                }
+                else {
+                    res.status(500).send({
+                        message: docs
+                    });
+    
+                }
+            });
+    
+    };
+
 // Clear Assignment Table
 exports.clearAssignment = (req, res) => {
 

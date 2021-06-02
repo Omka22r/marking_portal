@@ -8,7 +8,8 @@ class GradeTab extends Component {
         super(props);
         this.state = {
             selectedStudent: null,
-            assignments: []
+            assignments: [],
+            selectStudent: true
 
         }
     }
@@ -16,7 +17,7 @@ class GradeTab extends Component {
 
     fetchAssignments(userid) {
 
-        
+
         this.setState({ selectedStudent: userid });
 
         console.log('Getting the users assignments');
@@ -39,37 +40,41 @@ class GradeTab extends Component {
 
         return (
             <Col className="mx-auto d-flex flex-column col-11">
-                <Form>
-                    <Form.Row>
-                        <Col xs="auto" className="mt-1 ">
-                            <Form.Label className="m-2">
-                                <h5>Select Student:</h5>
-                            </Form.Label>
-                            <Form.Control
-                                as="select"
-                                // defaultValue={null}
-                                onChange={(e) => this.fetchAssignments(e.target.value)}
-                                className="col-2">
-                                {this.state.selectedStudent === null ? <option value={null} >Choose...</option> : null}
-                                {this.props.list.map((e) => <option key={e._id} value={e._id}>{e.name}</option>)}
-                            </Form.Control>
-                        </Col>
+                {this.state.selectStudent ?
+                    <Form>
+                        <Form.Row>
+                            <Col xs="auto" className="mt-1 ">
+                                <Form.Label className="m-2">
+                                    <h5>Select Student:</h5>
+                                </Form.Label>
+                                <Form.Control
+                                    as="select"
+                                    // defaultValue={null}
+                                    onChange={(e) => this.fetchAssignments(e.target.value)}
+                                    className="col-2">
+                                    {this.state.selectedStudent === null ? <option value={null} >Choose...</option> : null}
+                                    {this.props.list.map((e) => <option key={e._id} value={e._id}>{e.name}</option>)}
+                                </Form.Control>
+                            </Col>
 
-                    </Form.Row>
-                </Form>
-                <Col className="col-12 mt-2 flex-column bg-dark text-center">
+                        </Form.Row>
+                    </Form> : null}
+
+                <Col className="col-12 mt-2 flex-column align-items-center">
                     {
                         this.state.selectedStudent === null ?
 
 
-                            <h5 className="mt-5">No Students Selected</h5>
+                            <h5 className="mt-5 text-center">No Students Selected</h5>
 
                             :
                             this.state.assignments.length === 0 ?
-                                <h5 className="mt-5">No Assignments Submitted</h5>
+                                <h5 className="mt-5 text-center">No Assignments Submitted</h5>
                                 :
                                 <AssignmentTab
-
+                                    selectStudent={() => this.setState({selectStudent: !this.state.selectStudent})}
+                                    instructor={true}
+                                    onUpdate={() => this.fetchAssignments(this.state.selectedStudent)}
                                     assignment={this.state.assignments} />
 
                     }

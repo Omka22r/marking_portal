@@ -30,7 +30,7 @@ class Question extends Component {
             this.setState({ answer_mcs: [...this.state.answer_mcs, e] });
         }
 
-        // this.props.updates(answer);
+        this.props.updates(answer);
 
 
 
@@ -40,12 +40,18 @@ class Question extends Component {
     renderQuestion() {
         switch (this.props.question.type) {
             case "mc":
+                console.log(this.props.question);
                 return (
                     <li className="p-2">
                         <Card.Subtitle >{this.props.question.title}</Card.Subtitle >
 
                         {this.props.instructor_view ?
-                            <Card.Subtitle className="mb-2 text-success border-top p-2"><h5>{this.props.question.answer[0]}</h5></Card.Subtitle>
+
+                            <Card.Subtitle className="mt-2 text-success border-top p-2">
+                                <h5>
+                                    {this.props.question.answer.length === 0 ? 'Not Answered' : this.props.question.answer[0]}
+                                </h5>
+                            </Card.Subtitle>
                             :
                             <Card.Text className="mt-2">
 
@@ -71,9 +77,9 @@ class Question extends Component {
                     <li className="p-2">
                         <Card.Subtitle >{this.props.question.title}</Card.Subtitle >
                         {this.props.instructor_view ?
-                            <Card.Subtitle className="mb-2 text-success border-top p-2">
+                            <Card.Subtitle className="mb-2 mt-2 text-success border-top p-2">
 
-                                <h5>{
+                                <h5>{this.props.question.answer.length === 0 ? 'Not Answered' :
                                     this.props.question.answer.map(
                                         (i, index) => index !== 0 ? ', ' + i : i)}
                                 </h5>
@@ -105,7 +111,12 @@ class Question extends Component {
                     <li>
                         <Card.Subtitle>{this.props.question.title}</Card.Subtitle>
                         {this.props.instructor_view ?
-                            <Card.Subtitle className="mb-2 text-success border-top p-2"><h5>{this.props.question.answer[0]}</h5></Card.Subtitle>
+                            <Card.Subtitle className="mb-2 mt-2 text-success border-top p-2">
+                                <h5>{
+                                    this.props.question.answer.length === 0 ? 'Not Answered' :
+                                        this.props.question.answer[0]}
+                                </h5>
+                            </Card.Subtitle>
                             :
                             <Card.Text>
                                 <Form.Group className=" col-sm-11 col-md-6">
@@ -115,7 +126,7 @@ class Question extends Component {
                                         className="m-3"
                                         onChange={
                                             (e) => {
-                                                // this.props.updates(e.target.value);
+                                                this.props.updates(e.target.value);
                                                 this.setState({ answer: e.target.value });
                                             }
 
