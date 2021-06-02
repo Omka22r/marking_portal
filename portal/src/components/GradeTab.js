@@ -57,7 +57,7 @@ class GradeTab extends Component {
 
                     </Form.Row>
                 </Form>
-                <Col className="col-12 mt-2 text-center">
+                <Col className="col-12 mt-2 flex-column bg-dark text-center">
                     {
                         this.state.selectedStudent === null ?
 

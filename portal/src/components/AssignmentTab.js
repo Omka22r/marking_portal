@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Row, Col, CardDeck, Button, Card, Badge, Form, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { CardGroup, Col, CardDeck, Button, Card, Badge, Form, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { CardList } from 'react-bootstrap-icons';
+import Questions from './Questions';
 
 class AssignmentTab extends Component {
 
@@ -41,6 +42,19 @@ class AssignmentTab extends Component {
                     <Card className="mt-3" >
                         <Card.Header className="bg-dark text-white">{this.state.current_assignment.title}</Card.Header>
                         <Card.Body>
+                            <p>{this.state.current_assignment.description}</p>
+
+                            {<ol>
+                                {this.state.current_assignment.questions.map((ques, index) =>
+
+                                    <Questions
+                                        // instructor_view={this.props.instructor}
+                                         // updates={(i) => this.update_answers(i, index)}
+                                        question={ques} />
+
+                                )}
+
+                            </ol>}
                         </Card.Body>
                         <ListGroup className="list-group-flush">
 
@@ -60,19 +74,18 @@ class AssignmentTab extends Component {
 
                                         </Form.Group>
                                         <Button
-                                
+
                                             type="submit"
                                             disabled={this.state.score == null}
                                             className="" size="sm" variant="info">Submit Score</Button>
 
                                     </Form>
 
-
                                     :
                                     <Button
 
                                         disabled={this.state.answered_questions <= this.state.questions.length}
-                                        className="mt-2" size="sm" variant="info">Submit</Button>
+                                        className="m-1" size="sm" variant="outline-info">Submit</Button>
 
                                 }
                             </ListGroupItem>
@@ -80,9 +93,9 @@ class AssignmentTab extends Component {
                     </Card>
 
                 </Col> :
-                <CardDeck className="mt-4">
+                <CardGroup>
                     {this.props.assignment.map((a) =>
-                        <Card key={a._id} className="mt-3">
+                        <Card key={a._id} className="m-2 border">
 
                             <Card.Body>
                                 <Card.Title className="d-flex ">
@@ -90,6 +103,7 @@ class AssignmentTab extends Component {
 
 
                                 </Card.Title>
+                                <hr />
                                 <Card.Text>
                                     {a.description}
                                 </Card.Text>
@@ -100,7 +114,7 @@ class AssignmentTab extends Component {
                                             onClick={() => {
 
                                                 this.setState({ current_assignment: a });
-                                               
+
                                             }}
                                             size="sm" variant="outline-success">GRADE</Button>
 
@@ -112,7 +126,7 @@ class AssignmentTab extends Component {
                                             onClick={() => {
                                                 console.log(a);
                                                 this.setState({ current_assignment: a, questions: a.questions });
-                                               
+
                                             }}
                                             size="sm" variant="outline-success">CONTINUE</Button>
 
@@ -149,7 +163,7 @@ class AssignmentTab extends Component {
                     }
 
 
-                </CardDeck >
+                </CardGroup >
 
         )
     }

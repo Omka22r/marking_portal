@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Row, CardColumns, Button, Card, Container } from 'react-bootstrap';
+import { Row, CardColumns, Col, Card, Container } from 'react-bootstrap';
 import AssignmentTab from '../components/AssignmentTab';
+import { JournalCheck } from 'react-bootstrap-icons';
 
 class StudentPage extends Component {
 
@@ -49,18 +50,20 @@ class StudentPage extends Component {
                 fluid
                 style={{ minHeight: '100vh', minWidth: '100vw', overflowY: 'auto' }}
                 className="col-12 d-flex flex-column justify-content-start h-100">
-                <h3 className="text-info border-bottom p-2 border-dark" style={{ letterSpacing: 2 }}> Assignments </h3>
 
-                {this.state.assignment.length !== 0
-                    ?
-                    <AssignmentTab
-        
-                        assignment={this.state.assignment} /> :
+                <h3 className="text-info border-bottom p-2 border-dark" style={{ letterSpacing: 2 }}><JournalCheck size="32" /> Assignments </h3>
 
-                    <h4>No assignments Found</h4>
-                }
+                
+                    {this.state.assignment.length !== 0
+                        ?
+                        <AssignmentTab
 
+                            assignment={this.state.assignment} /> :
 
+                        <h4>No assignments Found</h4>
+                    }
+
+                
             </Container>
         )
     }
