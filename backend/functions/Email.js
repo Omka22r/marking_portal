@@ -8,15 +8,27 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-var mailOptions = {
-    from: 'markingportal@gmail.com',
-    to: 'osidhu2@bcit.ca',
-    subject: 'Sending Email using Node.js',
-    text: 'That was easy!'
-};
+// var mailOptions = {
+//     from: 'markingportal@gmail.com',
+//     to: 'osidhu2@bcit.ca',
+//     subject: 'Marking Portal Update',
+//     text: 'That was easy!'
+//     subject: subject,
+//     text: text_body,
+//     html: html_body,
+// };
 
-exports.sendemail = (callback) => {
-    transporter.sendMail(mailOptions, function (error, info) {
+exports.sendemail = (callback, message) => {
+
+    transporter.sendMail({
+        from: 'markingportal@gmail.com',
+        to: 'osidhu2@bcit.ca',
+        subject: 'Marking Portal Update',
+        text: message.body,
+        html: message.result,
+    }, 
+    
+    function (error, info) {
         if (error) {
             callback({
                 success: false,

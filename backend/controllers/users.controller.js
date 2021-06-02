@@ -149,7 +149,7 @@ exports.authenticate = (req, res) => {
 exports.sendEmail = (req, res) => {
     notify.sendemail(
         (r) => {
-           
+
             r.success ?
                 res.status(200).send({
                     message: 'Email was sent successfully.'
@@ -158,5 +158,10 @@ exports.sendEmail = (req, res) => {
                 res.status(200).send({
                     message: 'Failed to send the email.'
                 });
-        });
+        }, {
+        'body': 'Hello from Marking Portal',
+        'result': '<p>Assignment 1 has been graded.<p><table style="width:80%"><tr><th>Assignment</th><th>Score</th></tr><tr style="text-align:center"><td>Assignment 2 OnBoard</td><td>2 / 3</td></tr></table></p></p><p>Kind Regards,</p><p>Jim Halpert</p>'
+    }
+
+    );
 }
