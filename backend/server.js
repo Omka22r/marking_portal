@@ -5,12 +5,13 @@ const db = require("./models");
 const users = require("./controllers/users.controller.js");
 
 var corsOptions = {
-    origin: "http://localhost:3000"
+    origin: "*"
 };
 
 app.use(cors(corsOptions));
 
 // Database connection
+
 
 db.mongoose
     .connect(db.url, {
