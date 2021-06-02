@@ -27,7 +27,7 @@ class StudentPage extends Component {
 
     fetchAssignments(userid) {
         console.log('Getting the users assignments');
-        fetch(`http://localhost:8000/api/assign?user=${userid}`)
+        fetch(`http://${process.env.REACT_APP_BACK_END}/api/assign?user=${userid}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data);

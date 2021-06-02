@@ -26,7 +26,7 @@ class InstructorPage extends Component {
 
         // Get users
         console.log('Getting the users list');
-        fetch('http://localhost:8000/api/users')
+        fetch(`http://${process.env.REACT_APP_BACK_END}/api/users`)
             .then(response => response.json())
             .then(data => {
                 this.setState({ student_list: data.filter((e) => e.usertype !== 'Instructor') });

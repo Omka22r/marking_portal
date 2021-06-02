@@ -2,7 +2,7 @@
 FROM mhart/alpine-node:12
 
 
-ENV REACT_APP_BACK_END=localhost
+ENV REACT_APP_BACK_END=localhost:8000
 
 # Set the working directory to /client
 WORKDIR /portal

@@ -46,7 +46,7 @@ class Routing extends Component {
 
         // Get users
         console.log('Getting the users list');
-        fetch('http://localhost:8000/api/users')
+        fetch(`http://${process.env.REACT_APP_BACK_END}/api/users`)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
@@ -55,7 +55,7 @@ class Routing extends Component {
 
     clearUsers() {
         //Delete all the users from database
-        fetch('http://localhost:8000/api/users', { method: 'DELETE' })
+        fetch(`http://${process.env.REACT_APP_BACK_END}/api/users`, { method: 'DELETE' })
             .then(response => response.json())
             // .then(e => console.log('Error: ' + e))
             .catch(err => console.log('Error: ' + err));
@@ -63,7 +63,7 @@ class Routing extends Component {
 
     fetchAssignments() {
         console.log('Getting all the Assignments');
-        fetch('http://localhost:8000/api/assign')
+        fetch(`http://${process.env.REACT_APP_BACK_END}/api/assign`)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
