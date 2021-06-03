@@ -34,17 +34,34 @@ let defaultUsers = [
     }
 ]
 
+let questions_list = [{
+    title: "When Was BCIT's 50th-annniversary celebration ?",
+    options: ["2016", "1976", "2002", "1999"]
+},
+{
+    title: "Which of the following services does the LTC provide ? Select all that apply.",
+    type: 'mcs',
+    options: ['Technicall Illustration', 'Instructional Design', 'Financial Advice', 'Admission and Registration', 'Audio-visual Loans']
+}, {
+    title: "The current Prime Minister in Canada is (include the starting year for the PM).",
+    type: 'fb',
+
+}];
+
 let deaultAssignments = [
     {
-        title: 'On Board Assignment'
+        title: 'On Board Assignment',
+        questions: questions_list[0]
 
     },
     {
-        title: 'Knowledge Test'
+        title: 'Knowledge Test',
+        questions: questions_list[1]
 
     },
     {
-        title: 'Learning Docker'
+        title: 'Learning Docker',
+        questions: questions_list[2]
 
     },
 ];
@@ -73,7 +90,8 @@ exports.setupDefaultUsers = () => {
                                 deaultAssignments.forEach((i) =>
                                     assignments.createAssignment({
                                         user_id: data._id,
-                                        title: i.title
+                                        title: i.title,
+                                        questions: i.questions
                                     }))
 
                                 : null;
