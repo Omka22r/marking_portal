@@ -22,15 +22,16 @@ class AssignmentTab extends Component {
         console.log(this.state.current_assignment)
     }
 
-    update_assignment(id, request) {
+    update_assignment(id, request, user_id) {
 
         // Api call to update assignments collection
-        console.log('Test id:' + id)
+       
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 id: id,
+                user_id: user_id,
                 request: request
 
             })
@@ -40,7 +41,7 @@ class AssignmentTab extends Component {
 
         fetch(`http://${process.env.REACT_APP_BACK_END}/api/assignUpdate`, requestOptions)
             .then(response => response.json())
-            .then(data => {
+            .then( data => {
 
                 this.props.onUpdate();
                 if (request.status === 'Submitted' || request.status == 'Graded') {
@@ -71,7 +72,9 @@ class AssignmentTab extends Component {
 
         e.preventDefault();
         this.update_assignment(this.state.current_assignment._id,
-            { submitted: true, status: 'Graded', score: this.state.score });
+            { submitted: true, status: 'Graded', score: this.state.score },
+            this.state.current_assignment.user_id
+            );
         this.props.selectStudent();
         
 
@@ -144,7 +147,8 @@ class AssignmentTab extends Component {
                                         onClick={() =>
                                             this.update_assignment(
                                                 this.state.current_assignment._id,
-                                                { submitted: true, status: 'Submitted', questions: this.state.questions },
+                                                { submitted: true, status: 'Submitted', questions: this.state.questions }
+                                               
 
                                             )}
 

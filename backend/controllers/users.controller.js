@@ -3,6 +3,9 @@ const Users = db.users;
 const assignments = require("../controllers/assignments.controller.js");
 const notify = require("../functions/Email.js");
 
+const Assignment = db.assignments;
+
+
 let defaultUsers = [
     {
         name: 'Michael Scott',
@@ -186,21 +189,42 @@ exports.signUp = (req, res) => {
 
 // Send Email
 exports.sendEmail = (req, res) => {
-    notify.sendemail(
-        (r) => {
 
-            r.success ?
-                res.status(200).send({
-                    message: 'Email was sent successfully.'
-                }) :
 
-                res.status(200).send({
-                    message: 'Failed to send the email.'
-                });
-        }, {
-        'body': 'Hello from Marking Portal',
-        'result': '<p>Hello Tim Carter,<p><p>Assignment 1 has been graded.<p><table style="width:80%;"><tr><th>Assignment</th><th>Score</th></tr><tr style="text-align:center"><td>Assignment 2 OnBoard</td><td>2 / 3</td></tr></table></p></p><p>Kind Regards,</p><p>Jim Halpert</p><style>table, td, th {border: 1px solid black;width: 300px;}</style>'
-    }
 
-    );
+
+    user = "60b872b20a976702787f3773";
+
+    formatEmail(user, res);
+}
+
+
+formatEmail = (user, res) => {
+    console.log('Format Email for:' + user);
+
+    let sender = 'Omkar Sidhu';
+    let receiver = 'Jim Halpert';
+
+    let ass = [{name: 'Test 1', score: 0}, {name: 'Test 12', score: 0}, {name: 'Test 3', score: 0}]
+    
+    // let one = `<p>Hello ${name},<p>`;
+
+    let msg = `<p>Hello ${receiver},<p><p>All Your Assignments has been graded.
+    <p><table style="width:80%;">
+    <tr><th>Assignment</th><th>Score</th></tr>`;
+    let i = `${
+        ass.map((i) =>  `<tr style="text-align:center"><td>${i.name}</td><td>${i.score}</td>`)
+    }`;
+    
+    console.log(i);
+    let three = `<tr style="text-align:center"><td>Assignment 2 OnBoard</td><td>2 / 3</td>
+    </tr></table></p></p>
+    <p>Kind Regards,</p>
+    <p>${sender}</p>
+    <style>table, td, th {border: 1px solid black;width: 300px;}</style>`;
+
+    res.status(500).send({
+        message: msg + i + three
+    });
+
 }

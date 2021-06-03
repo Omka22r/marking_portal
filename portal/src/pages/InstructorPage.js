@@ -52,7 +52,7 @@ class InstructorPage extends Component {
                 style={{ minHeight: '100vh', minWidth: '100vw', overflowY: 'auto' }}
                 className="col-12 d-flex flex-column justify-content-start h-100">
 
-                <Tabs className="mt-2" defaultActiveKey="admin" >
+                <Tabs className="mt-2" defaultActiveKey="grade" >
                     <Tab className="" eventKey="grade" title="Grade">
                         {this.state.student_list === null ?
                             null :

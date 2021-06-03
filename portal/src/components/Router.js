@@ -31,14 +31,14 @@ class Routing extends Component {
     test() {
         console.log('test');
 
-        let regex = /^three 1991$/i;
+        let regex = /^([a-zA-Z]+\s)[0-9]+$/;
 
 
-        let i = 'sddsds 1996';
+        let i = 'sddsds gg 1996';
 
-        let test = 'xzczxc 89';
+        let test = 'xzczxc  89';
 
-        return regex.test(test);
+        return regex.test(i);
 
     }
 
