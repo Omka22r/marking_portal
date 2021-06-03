@@ -7,27 +7,25 @@ let defaultUsers = [
     {
         name: 'Michael Scott',
         username: 'admin',
-        email: 'SamTestJo@gmail.com'
+        email: 'SamTestJo@gmail.com',
+        usertype: 'Instructor'
 
     },
     {
         name: 'Jim Halpert',
         username: 'student1',
-        usertype: 'Student',
         email: 'omka22rsidhu@gmail.com'
 
     },
     {
         name: 'Ryan Howard',
         username: 'student2',
-        usertype: 'Student',
         email: 'omka22rsidhu@gmail.com'
 
     },
     {
         name: 'Andy Bernard',
         username: 'student3',
-        usertype: 'Student',
         email: 'omka22rsidhu@gmail.com'
 
     }

@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Button, Container, Form, Spinner } from 'react-bootstrap';
+import { Button, Container, Form, Spinner, Table } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import { BoxArrowRight, Easel } from 'react-bootstrap-icons';
 
@@ -12,7 +12,8 @@ class LandingPage extends Component {
             username: '',
             password: '',
             error: null,
-            loading: false
+            loading: false,
+            users: []
         }
     }
 
@@ -21,6 +22,7 @@ class LandingPage extends Component {
 
     componentDidMount() {
         this.checkAuthentication();
+        this.fetchUser();
     }
 
     checkAuthentication() {
@@ -75,10 +77,21 @@ class LandingPage extends Component {
 
     }
 
+    fetchUser() {
+
+        // Get users
+        console.log('Getting the users list');
+        fetch(`http://${process.env.REACT_APP_BACK_END}/api/users`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                this.setState({ users: data });
+            }).catch(err => console.log('Error: ' + err));
+    }
 
     render() {
 
-        console.log(process.backend);
+        console.log(this.state.users);
         return (
             <Container style={{ minHeight: '30vh' }} className="bg-light mt-5 p-5 d-flex text-dark flex-column justify-content-center col-lg-4 col-md-8">
                 <h2 className="text-info" style={{ letterSpacing: 2 }}>Marking Portal <Easel className="ml-2" size="45" /></h2>
@@ -100,12 +113,35 @@ class LandingPage extends Component {
                         !this.state.loading ?
                             <Button className="d-flex align-items-center mt-3" size="sm" type="submit" disabled={this.state.username.length === 0 || this.state.password.length === 0}
                                 variant="primary">
-                                LOG IN <BoxArrowRight className="ml-2" size="18" />
+                                LOG IN <BoxArrowRight className="m-1" size="18" />
                             </Button> :
                             <Spinner className="mx-auto" animation="grow" />
                     }
 
                 </Form>
+                {this.state.users.length === 0 ? null :
+                    <Table className="mt-4" striped bordered hover variant="light">
+                        <thead>
+                            <tr>
+
+                                <th>User Name</th>
+                                <th>Password</th>
+                                <th>User Type</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.users.map((i) =>
+                                <tr>
+
+                                    <td>{i.username}</td>
+                                    <td>{i.password}</td>
+                                    <td>{i.usertype}</td>
+
+                                </tr> )
+                            }
+                        </tbody>
+                    </Table>}
 
             </Container>
         )

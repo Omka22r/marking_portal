@@ -120,6 +120,9 @@ class Question extends Component {
                             :
                             <Card.Text>
                                 <Form.Group className=" col-sm-11 col-md-6">
+                                    <Form.Text className="text-muted">
+                                        Accepted Format: [alphabetical letters][1 white space][numbers]
+    </Form.Text>
                                     <Form.Control
                                         type="text"
                                         value={this.state.answer}
@@ -133,7 +136,9 @@ class Question extends Component {
                                         }
 
                                     />
+
                                 </Form.Group>
+                              
 
                             </Card.Text>}
 

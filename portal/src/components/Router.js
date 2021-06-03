@@ -17,11 +17,28 @@ class Routing extends Component {
 
     componentDidMount() {
 
+
+        console.log(this.test());
+
         this.localStorageSetup();
-        //this.clearAssignments();
-        //this.clearUsers();
+        // this.clearAssignments();
+        // this.clearUsers();
         this.fetchUser();
         this.fetchAssignments();
+
+    }
+
+    test() {
+        console.log('test');
+
+        let regex = /^three 1991$/i;
+
+
+        let i = 'sddsds 1996';
+
+        let test = 'xzczxc 89';
+
+        return regex.test(test);
 
     }
 
