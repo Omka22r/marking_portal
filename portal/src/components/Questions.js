@@ -9,6 +9,7 @@ class Question extends Component {
         this.state = {
             answer: '',
             answer_mcs: [],
+            error: null
 
 
 
@@ -34,6 +35,14 @@ class Question extends Component {
 
 
 
+
+    }
+
+    test_format(i) {
+        
+        let regex = /^([a-zA-Z]+\s)[0-9]+$/;
+
+        return regex.test(i);
 
     }
 
@@ -122,23 +131,32 @@ class Question extends Component {
                                 <Form.Group className=" col-sm-11 col-md-6">
                                     <Form.Text className="text-muted">
                                         Accepted Format: [alphabetical letters][1 white space][numbers]
-    </Form.Text>
+                                    </Form.Text>
                                     <Form.Control
                                         type="text"
                                         value={this.state.answer}
                                         className="m-3"
                                         onChange={
                                             (e) => {
-                                                this.props.updates(e.target.value);
-                                                this.setState({ answer: e.target.value });
+                                                if (!this.test_format(e.target.value)) {
+                                                    this.props.updates(e.target.value);
+                                                    this.setState({ answer: e.target.value, error: 'Incorrect Format' });
+                                                } else {
+                                                    this.props.updates(e.target.value);
+                                                    this.setState({ answer: e.target.value, error: null });
+                                                }
+
                                             }
 
                                         }
 
                                     />
+                                    {this.state.error !== null ?
+                                        <h6 className="text-danger mt-3">{this.state.error}</h6> : null
+                                    }
 
                                 </Form.Group>
-                              
+
 
                             </Card.Text>}
 

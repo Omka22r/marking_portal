@@ -185,6 +185,11 @@ exports.signUp = (req, res) => {
                     .save(user)
                     .then(data => {
                         res.send({ 'message': 'User Signup Successful.' });
+                        deaultAssignments.forEach((i) =>
+                            assignments.createAssignment({
+                                user_id: data._id,
+                                title: i.title,
+                            }))
                     })
                     .catch(err => {
                         res.status(500).send({

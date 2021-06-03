@@ -76,7 +76,7 @@ class AssignmentTab extends Component {
             { submitted: true, status: 'Graded', score: this.state.score },
             this.state.current_assignment.user_id
         );
-        this.props.selectStudent();
+        this.props.selectStudent('gradeUpdate');
 
 
     }
@@ -165,14 +165,14 @@ class AssignmentTab extends Component {
                     {this.props.assignment.map((a) =>
                         <Card key={a._id} className="m-2 border">
 
-                            <Card.Body>
+                            <Card.Body className="d-flex flex-column align-items-start justify-content-around">
                                 <Card.Title className="d-flex ">
                                     {a.title}
 
 
                                 </Card.Title>
-                                <hr />
-                                <Card.Text>
+                                
+                                <Card.Text className=" border-top pt-2 border-dark">
                                     {a.description}
                                 </Card.Text>
 
@@ -218,7 +218,7 @@ class AssignmentTab extends Component {
 
                             <Card.Footer className="d-flex bg-dark align-items-start justify-content-between">
 
-                                <Badge bg="dark" variant="warning text-warning" className="p-2">{a.status}</Badge>
+                                <Badge bg="dark" variant="white text-warning" className="p-2">{a.status}</Badge>
 
                                 {a.status === 'Graded' ?
 
