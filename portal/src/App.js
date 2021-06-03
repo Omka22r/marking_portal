@@ -1,10 +1,13 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Router from './components/Router';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
   return (
-    <Router />
+    <ErrorBoundary>
+      <Router />
+    </ErrorBoundary>
   );
 }
 

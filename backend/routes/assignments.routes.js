@@ -7,6 +7,9 @@ module.exports = app => {
     // Retrieve Assignments
     router.get("/assign", assignments.getAssignmentList);
 
+    // Update Assignments
+    router.post("/assignUpdate", assignments.updateAssignment);
+
 
     // Delete all Assignments
     router.delete("/assign", assignments.clearAssignment);

@@ -7,6 +7,8 @@ WORKDIR /backend
 # copy package.json into the container at /api
 COPY package*.json /backend/
 
+ENV DATA_IP=database
+
 # install dependencies
 RUN npm install
 
