@@ -28,12 +28,37 @@ class UserSignup extends Component {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     }
 
+    nameIsValid(name) {
+
+        let regex = /^[A-Za-z]+$/;
+
+        return regex.test(name);
+
+
+    }
+
+    usernameIsValid(username) {
+        let regex = /^[A-Za-z0-9]+$/;
+
+        return regex.test(username);
+    }
+
 
     onSubmit(e) {
 
         e.preventDefault();
 
-        if (!this.emailIsValid(this.state.email)) {
+        if (!this.nameIsValid(this.state.first_name)) {
+            this.setState({ error: 'Invalid First Name. No special characters,numbers or spaces allowed.' });
+        }
+        else if (!this.nameIsValid(this.state.last_name)) {
+            this.setState({ error: 'Invalid Last Name. No special characters,numbers or spaces allowed.' });
+        } else if (!this.usernameIsValid(this.state.username)) {
+            this.setState({ error: 'Invalid Username. No special characters or spaces allowed.' });
+        } else if (this.state.password == '') {
+            this.setState({ error: 'Password is Required' });
+        }
+        else if (!this.emailIsValid(this.state.email)) {
             this.setState({ error: 'Invalid Email' });
         } else {
             this.signup_users();
@@ -103,12 +128,13 @@ class UserSignup extends Component {
                         <Toast.Header>
 
                             <strong className="me-auto text-dark">Making Portal</strong>
-                           
+
                         </Toast.Header>
                         <Toast.Body>User Signup Successful</Toast.Body>
                     </Toast>
-
+                    {this.state.error === null ? null : <h6 className="text-danger">{this.state.error}</h6>}
                     <Form.Row className="d-flex justify-content-around">
+
                         <Form.Group className="col-5" >
                             <Form.Label>First name</Form.Label>
                             <Form.Control
@@ -184,9 +210,9 @@ class UserSignup extends Component {
                         </Form.Group>
                     </Form.Row>
                     <Form.Row className="mt-2 d-flex">
-                        {this.state.error === null ? null : <p className="text-danger">{this.state.error}</p>}
+
                         <Button
-                            disabled={this.state.first_name.length == 0 || this.state.last_name.length == 0 || this.state.password.length == 0 || this.state.username.length == 0 || this.state.password.length == 0 || this.state.email.length == 0}
+                            // disabled={this.state.first_name.length == 0 || this.state.last_name.length == 0 || this.state.password.length == 0 || this.state.username.length == 0 || this.state.password.length == 0 || this.state.email.length == 0}
                             className="m-5" type="submit">Submit</Button>
                     </Form.Row>
 
