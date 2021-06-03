@@ -30,6 +30,7 @@ exports.sendemail = (callback, message) => {
     
     function (error, info) {
         if (error) {
+            console.log('email sent error:' + error);
             callback({
                 success: false,
                 data: error

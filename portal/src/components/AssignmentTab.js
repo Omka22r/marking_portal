@@ -76,7 +76,8 @@ class AssignmentTab extends Component {
             { submitted: true, status: 'Graded', score: this.state.score },
             this.state.current_assignment.user_id
         );
-        this.props.selectStudent('gradeUpdate');
+        this.props.onUpdate('scoreUpdate');
+        this.props.showSelectStudent('gradeUpdate');
 
 
     }
@@ -85,7 +86,6 @@ class AssignmentTab extends Component {
 
     render() {
 
-        console.log(this.props.assignment);
 
         return (
             this.state.current_assignment ?
@@ -95,7 +95,7 @@ class AssignmentTab extends Component {
                     <Button
                         onClick={() => {
                             this.setState({ current_assignment: null });
-                            if (this.props.instructor) { this.props.selectStudent() }
+                            if (this.props.instructor) { this.props.showSelectStudent() }
                         }}
                         className="mt-2 d-flex align-items-center" size="lg" variant="link">
                         <CardList className="m-2" size="24" /> List Assignments
@@ -127,6 +127,7 @@ class AssignmentTab extends Component {
                                             <Form.Label>Score</Form.Label>
                                             <Form.Control
                                                 as="select"
+                                                placeholder="select"
                                                 onChange={(e) => this.setState({ score: e.target.value })}
                                                 defaultValue="Select Score">
                                                 <option>0</option>
@@ -182,7 +183,7 @@ class AssignmentTab extends Component {
                                             onClick={() => {
 
                                                 this.setState({ current_assignment: a });
-                                                this.props.selectStudent();
+                                                this.props.showSelectStudent();
 
                                             }}
                                             size="sm" variant="outline-success">GRADE</Button>

@@ -167,6 +167,7 @@ exports.authenticate = (req, res) => {
 exports.signUp = (req, res) => {
 
     // Find if User already exist
+  
     Users.find({ username: req.body.username })
         .then(data => {
             console.log('Signup User');
@@ -213,7 +214,7 @@ exports.signUp = (req, res) => {
 // Send Email
 exports.sendEmail = (req, res) => {
 
-
+console.log(req);
     notify.sendemail(
         (r) => {
 
@@ -226,7 +227,7 @@ exports.sendEmail = (req, res) => {
                     message: 'Failed to send the email.'
                 });
         }, {
-        'body': 'Hello from Marking Portal',
+        'body': req.body.message,
         'result': req.body.message
     }
 

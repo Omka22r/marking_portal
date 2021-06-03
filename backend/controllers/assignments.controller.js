@@ -84,11 +84,11 @@ exports.updateAssignment = (req, res) => {
                 });
 
 
-                if (req.body.request.status === 'Graded') {
-                    console.log('test email 1' + req.body);
-                    console.log('Initiate Email for: ' + req.body.user_id);
-                    initiate_email(req.body.user_id);
-                }
+                // if (req.body.request.status === 'Graded') {
+                //     console.log('test email 1' + req.body);
+                //     console.log('Initiate Email for: ' + req.body.user_id);
+                //     initiate_email(req.body.user_id);
+                // }
 
             }
         });
