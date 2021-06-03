@@ -120,7 +120,11 @@ class Routing extends Component {
 
                         )} /> */}
 
+                    {/* <Route
+                        render={({ history }) => (
+                            <ErrorPage history={history} />
 
+                        )} /> */}
                     <Route>
                         <NavBar />
                         <Route path="/Instructor"
