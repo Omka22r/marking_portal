@@ -144,6 +144,47 @@ exports.authenticate = (req, res) => {
         });
 };
 
+// Signup New Users
+exports.signUp = (req, res) => {
+
+    // Find if User already exist
+    Users.find({ username: req.body.username })
+        .then(data => {
+            console.log('Signup User');
+            console.log(req.body);
+            if (data.length === 0) {
+                const user = new Users({
+                    name: req.body.name,
+                    password: req.body.password,
+                    username: req.body.username,
+                    email: req.body.email
+
+                });
+
+                // Save User in the database
+                user
+                    .save(user)
+                    .then(data => {
+                        res.send({ 'message': 'User Signup Successful.' });
+                    })
+                    .catch(err => {
+                        res.status(500).send({
+                            message:
+                                err.message || "Some error occurred while creating the Users."
+                        });
+                    });
+            }
+            else {
+                res.json({ 'error': 'Username is not available' })
+            };
+
+        }).catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the Users."
+            });
+        });
+};
 
 // Send Email
 exports.sendEmail = (req, res) => {

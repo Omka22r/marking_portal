@@ -5,7 +5,7 @@ module.exports = mongoose => {
             {
                 name: String,
                 username: String,
-                usertype: { type: String, default: 'Instructor' },
+                usertype: { type: String, default: 'Student' },
                 password:{type: String, default:'12345'},
                 email:String
                 
