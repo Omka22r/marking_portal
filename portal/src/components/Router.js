@@ -4,6 +4,7 @@ import NavBar from './NavBar';
 import InstructorPage from '../pages/InstructorPage';
 import StudentPage from '../pages/StudentPage';
 import LandingPage from '../pages/LandingPage';
+import ErrorPage from '../components/PageNotFound';
 
 
 class Routing extends Component {
@@ -113,6 +114,11 @@ class Routing extends Component {
                     <Route exact path="/">
                         <Redirect to="/welcome" />
                     </Route>
+                    {/* <Route
+                        render={({ history }) => (
+                            <ErrorPage history={history} />
+
+                        )} /> */}
 
 
                     <Route>
