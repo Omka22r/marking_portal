@@ -204,7 +204,7 @@ exports.sendEmail = (req, res) => {
                 });
         }, {
         'body': 'Hello from Marking Portal',
-        'result': req.query.msg
+        'result': req.body.message
     }
 
     );

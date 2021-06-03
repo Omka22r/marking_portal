@@ -44,34 +44,53 @@ class GradeTab extends Component {
         let assignment_list = this.state.assignments;
 
 
+
+
+
         let msg = this.formatEmail(sender, receiver, assignment_list);
 
-        fetch(`http://${process.env.REACT_APP_BACK_END}/api/users/email?msg=${msg}`)
+
+        // Api call to Signup Users
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({message:msg})
+        };
+
+        console.log(requestOptions);
+
+        fetch(`http://${process.env.REACT_APP_BACK_END}/api/users/email`, requestOptions)
             .then(response => response.json())
             .then(data => {
 
-                console.log(data);
+                console.log(data)
 
-
-            }).catch(err => console.log('Error: ' + err));
-        
+            })
+            .catch(err => console.log('Error: ' + err));
     }
+
+
+
+    // fetch(`http://${process.env.REACT_APP_BACK_END} /api/users / email ? msg = ${ msg } `)
+    //         .then(response => response.json())
+    //         .then(data => {
+
+    //             console.log(data);
+
+
+    //         }).catch(err => console.log('Error: ' + err));
+        
+    // }
 
     formatEmail(sender, receiver, assignment_list) {
 
-        let msg_1 = `<p>Hello ${receiver},<p><p>All Your Assignments has been graded.
-        <p><table style="width:80%;">
-        <tr><th>Assignment</th><th>Score</th></tr>`;
+        let msg_1 = `<p>Hello ${ receiver },</p> <p>All Your Assignments has been graded.</p><p><table style="width:80%;"><tr><th>Assignment</th><th>Score</th></tr>`;
 
-        let i = `${assignment_list.map((i) => `<tr style="text-align:center"><td>${i.title}</td><td>${i.score}</td>`)
-            }`;
+        let i = `${assignment_list.map((i) => `<tr style="text-align:center"><td>${i.title}</td><td>${i.score}</td>`)}`;
 
 
-        let msg_2 = `<tr style="text-align:center"><td>Assignment 2 OnBoard</td><td>2 / 3</td>
-        </tr></table></p></p>
-        <p>Kind Regards,</p>
-        <p>${sender}</p>
-        <style>table, td, th {border: 1px solid black;width: 300px;}</style>`;
+        let msg_2 = `</table></p></p><p>Kind Regards,</p><p>${sender}</p><style>table, td, th {border: 1px solid black;width: 300px;}</style>`;
 
         return msg_1 + i + msg_2;
     }
@@ -82,48 +101,48 @@ class GradeTab extends Component {
 
         return (
             <Col className="mx-auto d-flex flex-column col-11">
-                {this.state.selectStudent ?
-                    <Form>
-                        <Form.Row>
-                            <Col xs="auto" className="mt-1 ">
-                                <Form.Label className="m-2">
-                                    <h5>Select Student:</h5>
-                                </Form.Label>
-                                <Form.Control
-                                    as="select"
-                                    // defaultValue={null}
-                                    onChange={(e) => this.fetchAssignments(e.target.value)}
-                                    className="col-2">
-                                    {this.state.selectedStudent === null ? <option value={null} >Choose...</option> : null}
-                                    {this.props.list.map((e) => <option key={e._id} value={e._id}>{e.name}</option>)}
-                                </Form.Control>
-                            </Col>
+        {this.state.selectStudent ?
+            <Form>
+                <Form.Row>
+                    <Col xs="auto" className="mt-1 ">
+                        <Form.Label className="m-2">
+                            <h5>Select Student:</h5>
+                        </Form.Label>
+                        <Form.Control
+                            as="select"
+                            // defaultValue={null}
+                            onChange={(e) => this.fetchAssignments(e.target.value)}
+                            className="col-2">
+                            {this.state.selectedStudent === null ? <option value={null} >Choose...</option> : null}
+                            {this.props.list.map((e) => <option key={e._id} value={e._id}>{e.name}</option>)}
+                        </Form.Control>
+                    </Col>
 
-                        </Form.Row>
-                    </Form> : null}
+                </Form.Row>
+            </Form> : null}
 
-                <Col className="col-12 mt-2 flex-column align-items-center">
-                    {
-                        this.state.selectedStudent === null ?
-
-
-                            <h5 className="mt-5 text-center">No Students Selected</h5>
-
-                            :
-                            this.state.assignments.length === 0 ?
-                                <h5 className="mt-5 text-center">No Assignments Submitted</h5>
-                                :
-                                <AssignmentTab
-                                    selectStudent={() => this.setState({ selectStudent: !this.state.selectStudent })}
-                                    instructor={true}
-                                    onUpdate={() => this.fetchAssignments(this.state.selectedStudent)}
-                                    assignment={this.state.assignments} />
-
-                    }
-                </Col>
+        <Col className="col-12 mt-2 flex-column align-items-center">
+            {
+                this.state.selectedStudent === null ?
 
 
-            </Col >
+                    <h5 className="mt-5 text-center">No Students Selected</h5>
+
+                    :
+                    this.state.assignments.length === 0 ?
+                        <h5 className="mt-5 text-center">No Assignments Submitted</h5>
+                        :
+                        <AssignmentTab
+                            selectStudent={() => this.setState({ selectStudent: !this.state.selectStudent })}
+                            instructor={true}
+                            onUpdate={() => this.fetchAssignments(this.state.selectedStudent)}
+                            assignment={this.state.assignments} />
+
+            }
+        </Col>
+
+
+    </Col >
         )
     }
 }
