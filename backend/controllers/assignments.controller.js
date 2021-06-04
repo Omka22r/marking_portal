@@ -1,8 +1,9 @@
 
-const { sendemail } = require("../functions/Email");
 const db = require("../models");
 const Assignment = db.assignments;
 const notify = require("../functions/Email.js");
+
+const Users = db.users;
 
 
 exports.createAssignment = (detail) => {
@@ -35,9 +36,13 @@ exports.getAssignmentList = (req, res) => {
             .then(data => {
 
                 if (data.length > 0) {
+
                     res.send({
-                        message: data
+                        message: data,
+                        gradedCount: data.filter(i => i.status === 'Graded').length
                     });
+
+
                 } else {
                     res.send({
                         error: "No Assignments Found"
@@ -64,35 +69,29 @@ exports.getAssignmentList = (req, res) => {
 
 // Update Assignment
 
-exports.updateAssignment = (req, res) => {
+exports.updateAssignment = async (req, res) => {
 
     console.log('Assignment Update');
     console.log(req.body);
-
-    Assignment.updateOne({ _id: req.body.id },
+    let user_id = req.body.user_id;
+    let test = await Assignment.updateOne({ _id: req.body.id },
         req.body.request, function (err, docs) {
             if (err) {
                 console.log(err);
                 res.send({
                     error: err
                 });
-
             }
             else {
-                res.status(500).send({
+
+                res.status(200).send({
                     message: docs
                 });
 
 
-                if (req.body.request.status === 'Graded') {
-                    console.log('test email 1' + req.body);
-                    console.log('Initiate Email for: ' + req.body.user_id);
-                    initiate_email(req.body.user_id);
-                }
-
             }
         });
-
+    sendEmail(user_id);
 };
 
 // Clear Assignment Table
@@ -109,91 +108,68 @@ exports.clearAssignment = (req, res) => {
 }
 
 
+var sendEmail =  async (userId) => {
 
+    let currentUser = await Users.findOne({ _id: userId });
+    console.log(currentUser.name);
 
-initiate_email = (userId) => {
-    Assignment.count({ user_id: userId, status: 'Graded' })
-        .then(graded => {
-
-            console.log('Graded:' + graded);
-            Assignment.count({ user_id: userId })
-                .then(submitted => {
-
-                    console.log('Submitted:' + submitted);
-                    console.log(graded === submitted)
-                    if (graded === submitted) {
-                        sendEmail(userId)
-                    }
-
-                })
-
-        }).catch(err => {
-            console.log("Some error occurred while retrieving Assignments.");
-        })
-
-}
-
-sendEmail = (userId) => {
-
-    console.log('Send Email');
-    notify.sendemail(
-        (r) => {
-
-            r.success ?
-                console.log('Email was sent successfully.')
-                :
-                console.log('Failed to send the email.')
-        }, {
-        'body': 'Hello from Marking Portal',
-        'result': formatEmail(userId)
-    }
-
-    );
-
-}
-
-formatEmail = (user_id) => {
-
-
-    Assignment.find({ user_id: user_id })
+    console.log('Send Email for :' + userId);
+    Assignment.find({ user_id: userId })
         .then(data => {
-
+            console.log(data);
             if (data.length > 0) {
 
-                console.log('Format Email for:' + user);
 
-                let sender = 'Omkar Sidhu';
-                let receiver = 'Jim Halpert';
 
-                let ass = data;
+                let count = 0;
 
-                let msg_1 = `<p>Hello ${receiver},<p><p>All Your Assignments has been graded.
-                <p><table style="width:80%;">
-                <tr><th>Assignment</th><th>Score</th></tr>`;
+                data.map((i) => {
 
-                let i = `${ass.map((i) => `<tr style="text-align:center"><td>${i.name}</td><td>${i.score}</td>`)
-                    }`;
+                    if (i.status == 'Graded') {
+                        count = count + 1;
+                    }
+                })
+                // let graded = data.filter((i) => i.status == 'Graded');
 
-                console.log(i);
+                console.log('all: ' + data.length + 'graded:' + count);
 
-                let msg_2 = `<tr style="text-align:center"><td>Assignment 2 OnBoard</td><td>2 / 3</td>
-                </tr></table></p></p>
-                <p>Kind Regards,</p>
-                <p>${sender}</p>
-                <style>table, td, th {border: 1px solid black;width: 300px;}</style>`;
-                return msg_1 + i + msg_2;
-                
-            } else {
-                console.log("No Assignments Found");
+
+                if (count === data.length) {
+                    console.log('Send Email');
+                    notify.sendemail(
+                        (r) => {
+
+                            r.success ?
+                                console.log('Email was sent successfully.')
+                                :
+                                console.log('Failed to send the email.')
+                        }, {
+                        'body': 'Hello from Marking Portal',
+                        'result': formatEmail('Michael Scott', currentUser.name, data)
+                    }
+
+                    );
+                }
+
 
             }
         }).catch(err => {
-            console.log(
-                err.message || "Some error occurred while retrieving Assignments."
-            );
+            console.log("Some error occurred while retrieving Assignments.");
+
         })
 
 
+}
 
 
+let formatEmail = (sender, receiver, assignment_list) => {
+
+    let msg_1 = `<p>Hello ${receiver},</p> <p>All Your Assignments has been graded.</p><p><table style="width:80%;"><tr><th>Assignment</th><th>Score</th></tr>`;
+
+    let i = `${assignment_list.map((i) => `<tr style="text-align:center"><td>${i.title}</td><td>${i.score}</td>`)}`;
+
+
+    let msg_2 = `</table></p></p><p>Kind Regards,</p><p>${sender}</p><style>table, td, th {border: 1px solid black;width: 300px;}</style>`;
+
+    return msg_1 + i + msg_2;
 }

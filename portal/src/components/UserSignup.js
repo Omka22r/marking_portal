@@ -43,6 +43,11 @@ class UserSignup extends Component {
         return regex.test(username);
     }
 
+    passwordIsValid(i) {
+        let regex = /^[A-Za-z0-9]+$/;
+
+        return regex.test(i);
+    }
 
     onSubmit(e) {
 
@@ -55,8 +60,8 @@ class UserSignup extends Component {
             this.setState({ error: 'Invalid Last Name. No special characters,numbers or spaces allowed.' });
         } else if (!this.usernameIsValid(this.state.username)) {
             this.setState({ error: 'Invalid Username. No special characters or spaces allowed.' });
-        } else if (this.state.password == '') {
-            this.setState({ error: 'Password is Required' });
+        } else if (!this.passwordIsValid(this.state.password)) {
+            this.setState({ error: 'Invalid Password. No special characters or spaces allowed.' });
         }
         else if (!this.emailIsValid(this.state.email)) {
             this.setState({ error: 'Invalid Email' });
@@ -212,7 +217,6 @@ class UserSignup extends Component {
                     <Form.Row className="mt-2 d-flex">
 
                         <Button
-                            // disabled={this.state.first_name.length == 0 || this.state.last_name.length == 0 || this.state.password.length == 0 || this.state.username.length == 0 || this.state.password.length == 0 || this.state.email.length == 0}
                             className="m-5" type="submit">Submit</Button>
                     </Form.Row>
 
