@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Button, Form } from 'react-bootstrap';
+import { Col, Button, Form, Spinner } from 'react-bootstrap';
 import AssignmentTab from './AssignmentTab';
 
 class GradeTab extends Component {
@@ -9,7 +9,8 @@ class GradeTab extends Component {
         this.state = {
             selectedStudent: null,
             assignments: [],
-            showSelectStudent: true
+            showSelectStudent: true,
+            sendEmail: false
 
         }
     }
@@ -39,7 +40,7 @@ class GradeTab extends Component {
     send_email() {
 
         console.log('Checking if email required');
-
+        this.setState({ sendEmail: true });
         let local = JSON.parse(localStorage.getItem('local_auth'));
         let student = this.props.list.filter(i => i._id == this.state.selectedStudent);
 
@@ -65,7 +66,10 @@ class GradeTab extends Component {
             .then(response => response.json())
             .then(data => {
 
-                console.log(data)
+                console.log(data);
+                if (data.message) {
+                    this.setState({ sendEmail: false })
+                }
 
             })
             .catch(err => console.log('Error: ' + err));
@@ -98,13 +102,16 @@ class GradeTab extends Component {
                                 <Form.Label className="m-2 d-flex align-items-center col-12 justify-content-between ">
                                     <h5>Select Student:</h5>
                                     {this.state.assignments.length === this.state.assignments.filter((i) => i.status == 'Graded').length && this.state.assignments.length > 0 ?
-                                        <Button
-                                            onClick={() => {
+                                        this.state.sendEmail ?
+                                            <Spinner animation="border" />
+                                            :
+                                            <Button
+                                                onClick={() => {
 
-                                                this.send_email()
+                                                    this.send_email()
 
-                                            }}
-                                            variant="outline-success">Send Email</Button>
+                                                }}
+                                                variant="outline-success">Send Email</Button>
                                         : null}
 
                                 </Form.Label>

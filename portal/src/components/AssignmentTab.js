@@ -13,6 +13,7 @@ class AssignmentTab extends Component {
             answered_questions: 0,
             score: 0,
             readOnly: false
+
         }
     }
 
