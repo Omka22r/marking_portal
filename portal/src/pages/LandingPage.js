@@ -91,7 +91,6 @@ class LandingPage extends Component {
 
     render() {
 
-        console.log(this.state.users);
         return (
             <Container style={{ minHeight: '30vh' }} className="bg-light mt-5 p-5 d-flex text-dark flex-column justify-content-center col-lg-4 col-md-8">
                 <h2 className="text-info" style={{ letterSpacing: 2 }}>Marking Portal <Easel className="ml-2" size="45" /></h2>

@@ -7,7 +7,7 @@ WORKDIR /backend
 # copy package.json into the container at /api
 COPY package*.json /backend/
 
-ENV DATA_IP=database
+ENV DATA_ADD =mongodb://database:27017/markPortal
 
 # install dependencies
 RUN npm install
