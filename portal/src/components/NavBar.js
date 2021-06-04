@@ -10,7 +10,13 @@ class NavBar extends Component {
 
         this.state = {
 
-            current_user: null
+            current_user: {
+                loggedIn: false,
+                userId: null,
+                name: null,
+                usertype: null
+
+            }
 
         }
     }
@@ -25,10 +31,18 @@ class NavBar extends Component {
     logout() {
 
         let local = JSON.parse(localStorage.getItem('local_auth'));
+        console.log('Log out')
 
-        local.loggedIn = false;
+        let auth = {
+            "loggedIn": false,
+            "userId": null,
+            "name": null,
+            "usertype": null
 
-        localStorage.setItem('local_auth', JSON.stringify(local));
+        };
+
+        localStorage.setItem('local_auth', JSON.stringify(auth));
+        console.log(localStorage.getItem('local_auth'));
 
         this.props.history.push("/");
 
@@ -42,7 +56,7 @@ class NavBar extends Component {
 
 
         return (
-            this.state.current_user === null ?
+            !this.state.current_user.loggedIn ?
 
                 null
                 :

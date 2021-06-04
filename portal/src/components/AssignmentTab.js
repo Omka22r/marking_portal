@@ -11,9 +11,8 @@ class AssignmentTab extends Component {
             current_assignment: null,
             questions: null,
             answered_questions: 0,
-            score: null
-
-
+            score: 0,
+            readOnly: false
         }
     }
 
@@ -44,7 +43,7 @@ class AssignmentTab extends Component {
             .then(data => {
 
                 this.props.onUpdate();
-                
+
                 if (request.status === 'Submitted' || request.status == 'Graded') {
                     this.setState({ current_assignment: null, questions: null })
                 }
@@ -94,7 +93,8 @@ class AssignmentTab extends Component {
                 <Col className="mb-5">
                     <Button
                         onClick={() => {
-                            this.setState({ current_assignment: null });
+                            this.setState({ current_assignment: null, score: 0,  readOnly: false });
+                            
                             if (this.props.instructor) { this.props.showSelectStudent() }
                         }}
                         className="mt-2 d-flex align-items-center" size="lg" variant="link">
@@ -102,7 +102,16 @@ class AssignmentTab extends Component {
                     </Button>
 
                     <Card className="mt-3" >
-                        <Card.Header className="bg-dark text-white">{this.state.current_assignment.title}</Card.Header>
+                        <Card.Header className="bg-dark text-white d-flex align-items-center justify-content-between col-12">{this.state.current_assignment.title}
+                        {this.state.current_assignment.status === 'Graded' ?
+
+
+
+                                    <footer className="text-info">
+                                        Score:  {this.state.current_assignment.score + ' / ' + this.state.current_assignment.questions.length}
+                                    </footer>
+                                    : null}
+                        </Card.Header>
                         <Card.Body>
                             <p>{this.state.current_assignment.description}</p>
 
@@ -111,6 +120,7 @@ class AssignmentTab extends Component {
 
                                     <Questions
                                         instructor_view={this.props.instructor}
+                                        readOnly={this.state.readOnly}
                                         updates={(i) => this.update_answers(i, index)}
                                         question={ques} />
 
@@ -118,47 +128,50 @@ class AssignmentTab extends Component {
 
                             </ol>}
                         </Card.Body>
-                        <ListGroup className="list-group-flush">
+                        {this.state.readOnly ? null :
+                            <ListGroup className="list-group-flush">
 
-                            <ListGroupItem>
-                                {this.props.instructor ?
-                                    <Form onSubmit={(e) => this.submitGrades(e)}>
-                                        <Form.Group className="col-md-3 col-sm-10 ">
-                                            <Form.Label>Score</Form.Label>
-                                            <Form.Control
-                                                as="select"
-                                                placeholder="select"
-                                                onChange={(e) => this.setState({ score: e.target.value })}
-                                                defaultValue="Select Score">
-                                                <option>0</option>
-                                                {this.state.current_assignment.questions.map((i, index) => <option>{index + 1}</option>)}
+                                <ListGroupItem>
+                                    {this.props.instructor ?
+                                        <Form onSubmit={(e) => this.submitGrades(e)}>
+                                            <Form.Group className="col-md-3 col-sm-10 ">
+                                                <Form.Label>Score</Form.Label>
+                                                <Form.Control
+                                                    as="select"
+                                                    placeholder="select"
+                                                    onChange={(e) => this.setState({ score: e.target.value })}
+                                                    defaultValue="Select Score">
+                                                    <option>0</option>
+                                                    {this.state.current_assignment.questions.map((i, index) => <option>{index + 1}</option>)}
 
-                                            </Form.Control>
+                                                </Form.Control>
 
-                                        </Form.Group>
+                                            </Form.Group>
+                                            <Button
+                                                type="submit"
+                                                
+                                                className="mt-4" size="sm" variant="info">Submit Score</Button>
+
+                                        </Form>
+
+                                        :
                                         <Button
-                                            type="submit"
-                                            disabled={this.state.score == null}
-                                            className="mt-4" size="sm" variant="info">Submit Score</Button>
-
-                                    </Form>
-
-                                    :
-                                    <Button
-                                        onClick={() =>
-                                            this.update_assignment(
-                                                this.state.current_assignment._id,
-                                                { submitted: true, status: 'Submitted', questions: this.state.questions }
+                                            onClick={() =>
+                                                this.update_assignment(
+                                                    this.state.current_assignment._id,
+                                                    { submitted: true, status: 'Submitted', questions: this.state.questions }
 
 
-                                            )}
+                                                )}
 
-                                        // disabled={this.state.answered_questions <= this.state.questions.length}
-                                        className="m-1" size="sm" variant="outline-info">Submit</Button>
+                                            // disabled={this.state.answered_questions <= this.state.questions.length}
+                                            className="m-1" size="sm" variant="outline-info">Submit</Button>
 
-                                }
-                            </ListGroupItem>
-                        </ListGroup>
+                                    }
+                                </ListGroupItem>
+                            </ListGroup>
+                        }
+
                     </Card>
 
                 </Col> :
@@ -172,17 +185,25 @@ class AssignmentTab extends Component {
 
 
                                 </Card.Title>
-                                
+
                                 <Card.Text className=" border-top pt-2 border-dark">
                                     {a.description}
                                 </Card.Text>
 
                                 {this.props.instructor ?
-                                    a.status === 'Graded' ? null :
+                                    a.status === 'Graded' ?
                                         <Button size="sm"
                                             onClick={() => {
 
-                                                this.setState({ current_assignment: a });
+                                                this.setState({ current_assignment: a, readOnly: true });
+                                                this.props.showSelectStudent();
+
+                                            }}
+                                            size="sm" variant="outline-success">VIEW</Button> :
+                                        <Button size="sm"
+                                            onClick={() => {
+
+                                                this.setState({ current_assignment: a, });
                                                 this.props.showSelectStudent();
 
                                             }}
@@ -201,7 +222,12 @@ class AssignmentTab extends Component {
                                             size="sm" variant="outline-success">CONTINUE</Button>
 
                                         :
-                                        a.status === 'Submitted' || a.status === 'Graded' ? null :
+                                        a.status === 'Submitted' || a.status === 'Graded' ?
+                                            <Button size="sm"
+                                                onClick={() => {
+                                                    this.setState({ readOnly: true, current_assignment: a, questions: a.questions });
+                                                }}
+                                                size="sm" variant="outline-success">VIEW</Button> :
                                             <Button size="sm"
                                                 onClick={() => {
                                                     console.log(a);

@@ -49,12 +49,12 @@ class Question extends Component {
     renderQuestion() {
         switch (this.props.question.type) {
             case "mc":
-                console.log(this.props.question);
+                console.log(this.props.readOnly);
                 return (
                     <li className="p-2">
                         <Card.Subtitle >{this.props.question.title}</Card.Subtitle >
 
-                        {this.props.instructor_view ?
+                        {this.props.instructor_view || this.props.readOnly ?
 
                             <Card.Subtitle className="mt-2 text-success border-top p-2">
                                 <h5>
@@ -85,7 +85,7 @@ class Question extends Component {
                 return (
                     <li className="p-2">
                         <Card.Subtitle >{this.props.question.title}</Card.Subtitle >
-                        {this.props.instructor_view ?
+                        {this.props.instructor_view  || this.props.readOnly ?
                             <Card.Subtitle className="mb-2 mt-2 text-success border-top p-2">
 
                                 <h5>{this.props.question.answer.length === 0 ? 'Not Answered' :
@@ -119,7 +119,7 @@ class Question extends Component {
                 return (
                     <li>
                         <Card.Subtitle>{this.props.question.title}</Card.Subtitle>
-                        {this.props.instructor_view ?
+                        {this.props.instructor_view  || this.props.readOnly ?
                             <Card.Subtitle className="mb-2 mt-2 text-success border-top p-2">
                                 <h5>{
                                     this.props.question.answer.length === 0 ? 'Not Answered' :

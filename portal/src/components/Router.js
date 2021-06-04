@@ -12,15 +12,12 @@ class Routing extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            i: null
         }
     }
 
     componentDidMount() {
-
-
-        console.log(this.test());
-
+        // console.log(this.state.i.length);
         this.localStorageSetup();
         // this.clearAssignments();
         // this.clearUsers();
@@ -29,19 +26,6 @@ class Routing extends Component {
 
     }
 
-    test() {
-        console.log('test');
-
-        let regex = /^([a-zA-Z]+\s)[0-9]+$/;
-
-
-        let i = 'sddsds gg 1996';
-
-        let test = 'xzczxc  89';
-
-        return regex.test(i);
-
-    }
 
     localStorageSetup() {
 
@@ -114,11 +98,7 @@ class Routing extends Component {
                     <Route exact path="/">
                         <Redirect to="/welcome" />
                     </Route>
-                    {/* <Route
-                        render={({ history }) => (
-                            <ErrorPage history={history} />
 
-                        )} /> */}
 
 
                     <Route>
@@ -135,7 +115,12 @@ class Routing extends Component {
                                 <StudentPage history={history} />
                             )} />
 
+                        <Route
+                            path="*"
+                            render={({ history }) => (
+                                <ErrorPage history={history} />
 
+                            )} />
                     </Route>
                 </Switch>
             </HashRouter >
