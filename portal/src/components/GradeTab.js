@@ -41,6 +41,7 @@ class GradeTab extends Component {
 
         console.log('Checking if email required');
         this.setState({ sendEmail: true });
+        
         let local = JSON.parse(localStorage.getItem('local_auth'));
         let student = this.props.list.filter(i => i._id == this.state.selectedStudent);
 

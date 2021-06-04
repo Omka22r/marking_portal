@@ -115,12 +115,7 @@ class Routing extends Component {
                                 <StudentPage history={history} />
                             )} />
 
-                        <Route
-                            path="*"
-                            render={({ history }) => (
-                                <ErrorPage history={history} />
-
-                            )} />
+                
                     </Route>
                 </Switch>
             </HashRouter >

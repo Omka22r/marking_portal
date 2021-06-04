@@ -72,6 +72,7 @@ class AssignmentTab extends Component {
     submitGrades(e) {
 
         e.preventDefault();
+
         this.update_assignment(this.state.current_assignment._id,
             { submitted: true, status: 'Graded', score: this.state.score },
             this.state.current_assignment.user_id
@@ -150,7 +151,6 @@ class AssignmentTab extends Component {
                                             </Form.Group>
                                             <Button
                                                 type="submit"
-                                                
                                                 className="mt-4" size="sm" variant="info">Submit Score</Button>
 
                                         </Form>
@@ -160,7 +160,8 @@ class AssignmentTab extends Component {
                                             onClick={() =>
                                                 this.update_assignment(
                                                     this.state.current_assignment._id,
-                                                    { submitted: true, status: 'Submitted', questions: this.state.questions }
+                                                    { submitted: true, status: 'Submitted', questions: this.state.questions },
+                                                    this.state.current_assignment.user_id
 
 
                                                 )}
