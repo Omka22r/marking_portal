@@ -23,7 +23,7 @@ class Routing extends Component {
         // this.clearUsers();
         this.fetchUser();
         this.fetchAssignments();
-
+        console.log(window.location.hash)
     }
 
 
@@ -114,9 +114,16 @@ class Routing extends Component {
                             render={({ history }) => (
                                 <StudentPage history={history} />
                             )} />
+                        <Route
+                            path="*"
+                            render={({ history }) => (
+                                <ErrorPage history={history} />
 
-                
+                            )} />
+
                     </Route>
+
+
                 </Switch>
             </HashRouter >
 
