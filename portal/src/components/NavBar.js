@@ -30,9 +30,7 @@ class NavBar extends Component {
 
     logout() {
 
-        let local = JSON.parse(localStorage.getItem('local_auth'));
-        console.log('Log out')
-
+    
         let auth = {
             "loggedIn": false,
             "userId": null,

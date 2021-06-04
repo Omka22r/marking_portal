@@ -217,7 +217,6 @@ class UserSignup extends Component {
                     <Form.Row className="mt-2 d-flex">
 
                         <Button
-                            // disabled={this.state.first_name.length == 0 || this.state.last_name.length == 0 || this.state.password.length == 0 || this.state.username.length == 0 || this.state.password.length == 0 || this.state.email.length == 0}
                             className="m-5" type="submit">Submit</Button>
                     </Form.Row>
 

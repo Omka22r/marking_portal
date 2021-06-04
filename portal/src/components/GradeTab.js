@@ -17,10 +17,9 @@ class GradeTab extends Component {
 
 
 
-    fetchAssignments(userid, type) {
+    fetchAssignments(userid) {
 
-        console.log('type: ' + type);
-        console.log('user: ' + userid);
+ 
         this.setState({ selectedStudent: userid });
 
         console.log('Getting the users assignments');
@@ -35,59 +34,6 @@ class GradeTab extends Component {
                 // }
 
             }).catch(err => console.log('Error: ' + err));
-    }
-
-    send_email() {
-
-        console.log('Checking if email required');
-        this.setState({ sendEmail: true });
-        
-        let local = JSON.parse(localStorage.getItem('local_auth'));
-        let student = this.props.list.filter(i => i._id == this.state.selectedStudent);
-
-        let sender = local.name;
-        let receiver = student[0].name;
-        let assignment_list = this.state.assignments;
-
-        console.log('Formatting email');
-        let msg = this.formatEmail(sender, receiver, assignment_list);
-
-
-        // Api call to Signup Users
-
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: msg })
-        };
-
-        console.log(requestOptions);
-
-        fetch(`http://${process.env.REACT_APP_BACK_END}/api/users/email`, requestOptions)
-            .then(response => response.json())
-            .then(data => {
-
-                console.log(data);
-                if (data.message) {
-                    this.setState({ sendEmail: false })
-                }
-
-            })
-            .catch(err => console.log('Error: ' + err));
-    }
-
-
-
-    formatEmail(sender, receiver, assignment_list) {
-
-        let msg_1 = `<p>Hello ${receiver},</p> <p>All Your Assignments has been graded.</p><p><table style="width:80%;"><tr><th>Assignment</th><th>Score</th></tr>`;
-
-        let i = `${assignment_list.map((i) => `<tr style="text-align:center"><td>${i.title}</td><td>${i.score}</td>`)}`;
-
-
-        let msg_2 = `</table></p></p><p>Kind Regards,</p><p>${sender}</p><style>table, td, th {border: 1px solid black;width: 300px;}</style>`;
-
-        return msg_1 + i + msg_2;
     }
 
 
@@ -145,7 +91,7 @@ class GradeTab extends Component {
                                         this.setState({ showSelectStudent: !this.state.showSelectStudent });
                                     }}
                                     instructor={true}
-                                    onUpdate={(type) => this.fetchAssignments(this.state.selectedStudent, type)}
+                                    onUpdate={() => this.fetchAssignments(this.state.selectedStudent)}
                                     assignment={this.state.assignments} />
 
                     }

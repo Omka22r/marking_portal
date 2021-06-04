@@ -18,8 +18,7 @@ class AssignmentTab extends Component {
     }
 
     componentDidMount() {
-        console.log('Current Assign');
-        console.log(this.state.current_assignment)
+        
     }
 
     update_assignment(id, request, user_id) {
@@ -37,7 +36,6 @@ class AssignmentTab extends Component {
             })
         };
 
-        console.log(requestOptions);
 
         fetch(`http://${process.env.REACT_APP_BACK_END}/api/assignUpdate`, requestOptions)
             .then(response => response.json())
@@ -53,7 +51,7 @@ class AssignmentTab extends Component {
     }
 
     update_answers(user_input, index) {
-        console.log(user_input);
+       
 
         let input = Array.isArray(user_input) ? user_input : [user_input];
 
@@ -77,8 +75,8 @@ class AssignmentTab extends Component {
             { submitted: true, status: 'Graded', score: this.state.score },
             this.state.current_assignment.user_id
         );
-        this.props.onUpdate('scoreUpdate');
-        this.props.showSelectStudent('gradeUpdate');
+        this.props.onUpdate();
+        this.props.showSelectStudent();
 
 
     }

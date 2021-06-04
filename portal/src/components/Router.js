@@ -17,13 +17,13 @@ class Routing extends Component {
     }
 
     componentDidMount() {
-        // console.log(this.state.i.length);
+       
         this.localStorageSetup();
         // this.clearAssignments();
         // this.clearUsers();
         this.fetchUser();
         this.fetchAssignments();
-        console.log(window.location.hash)
+    
     }
 
 
