@@ -35,9 +35,15 @@ exports.getAssignmentList = (req, res) => {
             .then(data => {
 
                 if (data.length > 0) {
+                    
+                    
+
                     res.send({
-                        message: data
+                        message: data,
+                        gradedCount:data.filter(i => i.status ==='Graded').length
                     });
+
+
                 } else {
                     res.send({
                         error: "No Assignments Found"
